@@ -3,6 +3,8 @@
 int main(void)
 {
 	int choice;
+	int a;
+	int b;
 
 	choice = -1;
 
@@ -21,6 +23,26 @@ int main(void)
 		if (choice == 0)
 		{
 			printf("Bye!\n");
+		}
+		else if (choice == 1)
+		{
+			printf("A: ");
+			scanf("%d", &a);
+
+			printf("B: ");
+			scanf("%d", &b);
+
+			printf("Result: %d\n", a + b);
+		}
+		else if (choice == 2)
+		{
+			printf("A: ");
+			scanf("%d", &a);
+
+			printf("B: ");
+			scanf("%d", &b);
+
+			printf("Result: %d\n", a - b);
 		}
 		else if (choice < 0 || choice > 4)
 		{
