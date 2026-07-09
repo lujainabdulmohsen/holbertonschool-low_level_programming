@@ -2,7 +2,9 @@
 
 int main(void)
 {
-	int choice = -1;
+	int choice;
+
+	choice = -1;
 
 	while (choice != 0)
 	{
@@ -20,9 +22,11 @@ int main(void)
 		{
 			printf("Bye!\n");
 		}
+		else if (choice < 0 || choice > 4)
+		{
+			printf("Invalid choice\n");
+		}
 	}
 
-
-	
 	return (0);
 }
