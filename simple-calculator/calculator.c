@@ -1,10 +1,35 @@
 #include <stdio.h>
 
+int read_number(char *label, int *number)
+{
+	int result;
+	int c;
+
+	while (1)
+	{
+		printf("%s", label);
+		result = scanf("%d", number);
+
+		if (result == 1)
+		{
+			return (1);
+		}
+
+		printf("Invalid number\n");
+
+		while ((c = getchar()) != '\n' && c != EOF)
+		{
+		}
+	}
+}
+
 int main(void)
 {
 	int choice;
 	int a;
 	int b;
+	int result;
+	int c;
 
 	choice = -1;
 
@@ -18,44 +43,41 @@ int main(void)
 		printf("0) Quit\n");
 		printf("Choice: ");
 
-		scanf("%d", &choice);
+		result = scanf("%d", &choice);
+
+		if (result != 1)
+		{
+			printf("Invalid choice\n");
+
+			while ((c = getchar()) != '\n' && c != EOF)
+			{
+			}
+
+			continue;
+		}
 
 		if (choice == 0)
 		{
 			printf("Bye!\n");
 		}
-		else if (choice == 1)
+		else if (choice >= 1 && choice <= 4)
 		{
-			printf("A: ");
-			scanf("%d", &a);
-			printf("B: ");
-			scanf("%d", &b);
-			printf("Result: %d\n", a + b);
-		}
-		else if (choice == 2)
-		{
-			printf("A: ");
-			scanf("%d", &a);
-			printf("B: ");
-			scanf("%d", &b);
-			printf("Result: %d\n", a - b);
-		}
-		else if (choice == 3)
-		{
-			printf("A: ");
-			scanf("%d", &a);
-			printf("B: ");
-			scanf("%d", &b);
-			printf("Result: %d\n", a * b);
-		}
-		else if (choice == 4)
-		{
-			printf("A: ");
-			scanf("%d", &a);
-			printf("B: ");
-			scanf("%d", &b);
+			read_number("A: ", &a);
+			read_number("B: ", &b);
 
-			if (b == 0)
+			if (choice == 1)
+			{
+				printf("Result: %d\n", a + b);
+			}
+			else if (choice == 2)
+			{
+				printf("Result: %d\n", a - b);
+			}
+			else if (choice == 3)
+			{
+				printf("Result: %d\n", a * b);
+			}
+			else if (b == 0)
 			{
 				printf("Error: division by zero\n");
 			}
@@ -64,7 +86,7 @@ int main(void)
 				printf("Result: %.1f\n", (double)a / b);
 			}
 		}
-		else if (choice < 0 || choice > 4)
+		else
 		{
 			printf("Invalid choice\n");
 		}
