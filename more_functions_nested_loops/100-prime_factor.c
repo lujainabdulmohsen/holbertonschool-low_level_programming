@@ -7,18 +7,25 @@
  */
 int main(void)
 {
- unsigned long n = 612852475143;
- unsigned long factor = 2;
+	long number;
+	long factor;
 
- while (factor * factor <= n)
- {
-  if (n % factor == 0)
-   n /= factor;
-  else
-   factor++;
- }
+	number = 612852475143;
+	factor = 2;
 
- printf("%lu\n", n);
+	while (factor * factor <= number)
+	{
+		if (number % factor == 0)
+		{
+			number = number / factor;
+		}
+		else
+		{
+			factor++;
+		}
+	}
 
- return (0);
+	printf("%ld\n", number);
+
+	return (0);
 }
