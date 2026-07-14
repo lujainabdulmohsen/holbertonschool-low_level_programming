@@ -26,3 +26,4 @@ char *_strcpy(char *dest, char *src);
 
 int _atoi(char *s);
 void print_number(int n);
+void set_string(char **s, char *to);
