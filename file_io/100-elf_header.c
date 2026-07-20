@@ -59,9 +59,9 @@ unsigned long get_32(unsigned char *data, int big_endian)
  *
  * Return: the 64-bit value
  */
-unsigned long long get_64(unsigned char *data, int big_endian)
+unsigned long get_64(unsigned char *data, int big_endian)
 {
-	unsigned long long value;
+	unsigned long value;
 	int i;
 
 	value = 0;
@@ -218,7 +218,7 @@ void print_type(unsigned int type)
 void print_entry(unsigned char *header, int big_endian)
 {
 	unsigned long entry32;
-	unsigned long long entry64;
+	unsigned long entry64;
 
 	printf("  Entry point address:               ");
 
@@ -230,7 +230,7 @@ void print_entry(unsigned char *header, int big_endian)
 	else
 	{
 		entry64 = get_64(header + 24, big_endian);
-		printf("0x%llx\n", entry64);
+		printf("0x%lx\n", entry64);
 	}
 }
 
