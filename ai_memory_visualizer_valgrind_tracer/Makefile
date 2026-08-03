@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89
 
-PROGRAMS = stack_lifetime heap_aliasing recursion memory_leak use_after_free uninitialized_memory
+PROGRAMS = stack_lifetime heap_aliasing recursion crashing_program
 
 all: $(PROGRAMS)
 
@@ -14,14 +14,8 @@ heap_aliasing: programs/heap_aliasing.c
 recursion: programs/recursion.c
 	$(CC) $(CFLAGS) programs/recursion.c -o recursion
 
-memory_leak: programs/memory_leak.c
-	$(CC) $(CFLAGS) programs/memory_leak.c -o memory_leak
-
-use_after_free: programs/use_after_free.c
-	$(CC) $(CFLAGS) programs/use_after_free.c -o use_after_free
-
-uninitialized_memory: programs/uninitialized_memory.c
-	$(CC) $(CFLAGS) programs/uninitialized_memory.c -o uninitialized_memory
+crashing_program: programs/crashing_program.c
+	$(CC) $(CFLAGS) programs/crashing_program.c -o crashing_program
 
 clean:
 	rm -f $(PROGRAMS)
