@@ -15,7 +15,6 @@ int max_index(char *name, int len)
 	unsigned int value;
 
 	max = name[0];
-
 	for (i = 0; i < len; i++)
 	{
 		if (name[i] > max)
@@ -41,7 +40,6 @@ int square_index(char *name, int len)
 	int value;
 
 	value = 0;
-
 	for (i = 0; i < len; i++)
 		value += name[i] * name[i];
 
@@ -60,11 +58,35 @@ int random_index(char *name)
 	int value;
 
 	value = 0;
-
 	for (i = 0; i < name[0]; i++)
 		value = rand();
 
 	return (((unsigned int)value ^ 229) & 63);
+}
+
+/**
+ * first_keys - generates the first three key characters
+ * @key: generated key
+ * @table: character table
+ * @name: username
+ * @len: username length
+ */
+void first_keys(char *key, char *table, char *name, int len)
+{
+	int i;
+	int value;
+
+	key[0] = table[(len ^ 59) & 63];
+
+	value = 0;
+	for (i = 0; i < len; i++)
+		value += name[i];
+	key[1] = table[(value ^ 79) & 63];
+
+	value = 1;
+	for (i = 0; i < len; i++)
+		value *= name[i];
+	key[2] = table[(value ^ 85) & 63];
 }
 
 /**
@@ -89,8 +111,6 @@ int main(int argc, char **argv)
 		0x6b756f494b646850
 	};
 	int len;
-	int i;
-	int value;
 
 	if (argc != 2)
 		return (1);
@@ -100,18 +120,7 @@ int main(int argc, char **argv)
 	for (len = 0; argv[1][len] != '\0'; len++)
 		;
 
-	key[0] = table[(len ^ 59) & 63];
-
-	value = 0;
-	for (i = 0; i < len; i++)
-		value += argv[1][i];
-	key[1] = table[(value ^ 79) & 63];
-
-	value = 1;
-	for (i = 0; i < len; i++)
-		value *= argv[1][i];
-	key[2] = table[(value ^ 85) & 63];
-
+	first_keys(key, table, argv[1], len);
 	key[3] = table[max_index(argv[1], len)];
 	key[4] = table[square_index(argv[1], len)];
 	key[5] = table[random_index(argv[1])];
