@@ -2,58 +2,70 @@
 #include <string.h>
 #include "session.h"
 
-session_t *session_create(const char *id, unsigned int uid, const unsigned char *data, size_t data_len)
+session_t *session_create(const char *id, unsigned int uid,
+			  const unsigned char *data, size_t data_len)
 {
 	session_t *s;
 
-	s = (session_t *)malloc(sizeof(*s));
-	if (!s)
-		return NULL;
+	if (!id || (data_len > 0 && !data))
+		return (NULL);
 
-	s->id = (char *)id;
+	s = malloc(sizeof(*s));
+	if (!s)
+		return (NULL);
+
+	s->id = malloc(strlen(id) + 1);
+	if (!s->id)
+	{
+		free(s);
+		return (NULL);
+	}
+	strcpy(s->id, id);
 
 	s->uid = uid;
+	s->data = NULL;
+	s->data_len = 0;
 
-	if (data_len > 0) {
-		s->data = (unsigned char *)malloc(data_len);
-		if (!s->data) {
-			return NULL;
+	if (data_len > 0)
+	{
+		s->data = malloc(data_len);
+		if (!s->data)
+		{
+			free(s->id);
+			free(s);
+			return (NULL);
 		}
 		memcpy(s->data, data, data_len);
 		s->data_len = data_len;
-	} else {
-		s->data = NULL;
-		s->data_len = 0;
 	}
 
-	return s;
+	return (s);
 }
 
 int session_set_data(session_t *s, const unsigned char *data, size_t data_len)
 {
 	unsigned char *tmp;
 
-	if (!s)
-		return 0;
+	if (!s || (data_len > 0 && !data))
+		return (0);
 
-	if (data_len == 0) {
+	if (data_len == 0)
+	{
 		free(s->data);
 		s->data = NULL;
 		s->data_len = 0;
-		return 1;
+		return (1);
 	}
 
-	tmp = (unsigned char *)realloc(s->data, data_len);
+	tmp = realloc(s->data, data_len);
+	if (!tmp)
+		return (0);
+
 	s->data = tmp;
-
-	if (!s->data) {
-		s->data_len = 0;
-		return 0;
-	}
-
 	memcpy(s->data, data, data_len);
 	s->data_len = data_len;
-	return 1;
+
+	return (1);
 }
 
 void session_destroy(session_t *s)
@@ -62,7 +74,6 @@ void session_destroy(session_t *s)
 		return;
 
 	free(s->id);
-
 	free(s->data);
 	free(s);
 }
